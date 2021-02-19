@@ -31,7 +31,7 @@ class tcn_model:
         self.model = Sequential()
         self.model.add(Embedding(vocab_size, embedding_dim,
                                  input_length=i_dim))
-        self.model.add(TCN(nb_filters = num_filters, kernel_size=3, dilations=[1,2,4,8,16,32,64]))
+        self.model.add(TCN(nb_filters = num_filters, kernel_size=3, dilations=[1,4,16,64]))
         self.model.add(Dropout(0.3))
         self.model.add(Dense(o_dim, activation='sigmoid'))
         self.model.compile(optimizer='adam',
@@ -39,7 +39,7 @@ class tcn_model:
                            metrics=['accuracy'])
 
         self.model_name = 'TCN'
-        self.model.summary()
+        tcn_full_summary(self.model, expand_residual_blocks=True)
 
     def train(self, X_train, y_train, X_test, y_test, num_epochs, batch_size):
         history = self.model.fit(X_train,
