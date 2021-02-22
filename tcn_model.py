@@ -31,7 +31,7 @@ class tcn_model:
         self.model = Sequential()
         self.model.add(Embedding(vocab_size, embedding_dim,
                                  input_length=i_dim))
-        self.model.add(TCN(nb_filters = num_filters, kernel_size=3, dilations=[1,4,16,64]))
+        self.model.add(TCN(nb_filters = num_filters, kernel_size=2, dilations=[1,2,4,8]))
         self.model.add(Dropout(0.3))
         self.model.add(Dense(o_dim, activation='sigmoid'))
         self.model.compile(optimizer='adam',
